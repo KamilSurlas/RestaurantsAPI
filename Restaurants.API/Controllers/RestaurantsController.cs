@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
+using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 
@@ -14,13 +15,13 @@ namespace Restaurants.API.Controllers
     public class RestaurantsController(IMediator _mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
         {
             var restaurants = await _mediator.Send(new GetAllRestaurantsQuery());
             return Ok(restaurants);
         }
         [HttpGet("{restaurantId}")]
-        public async Task<IActionResult> GetById([FromRoute] int restaurantId)
+        public async Task<ActionResult<RestaurantDto>> GetById([FromRoute] int restaurantId)
         {
             var restaurant = await _mediator.Send(new GetRestaurantByIdQuery(restaurantId));
             return Ok(restaurant);
@@ -32,6 +33,8 @@ namespace Restaurants.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
         [HttpDelete("{restaurantId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteById([FromRoute] int restaurantId)
         {
             await _mediator.Send(new DeleteRestaurantCommand(restaurantId));
@@ -39,6 +42,8 @@ namespace Restaurants.API.Controllers
             return NoContent();
         }
         [HttpPut("{restaurantId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] int restaurantId, UpdateRestaurantCommand command)
         {
             command.Id = restaurantId;
