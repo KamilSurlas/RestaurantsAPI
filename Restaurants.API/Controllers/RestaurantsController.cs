@@ -46,7 +46,7 @@ namespace Restaurants.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] int restaurantId, UpdateRestaurantCommand command)
         {
-            command.Id = restaurantId;
+            command.RestaurantId = restaurantId;
             await _mediator.Send(command);
 
 
