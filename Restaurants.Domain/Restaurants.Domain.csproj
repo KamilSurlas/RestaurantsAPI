@@ -10,4 +10,8 @@
     <None Remove="Entities\hj5ah0qe.gfw~" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+  </ItemGroup>
+
 </Project>
