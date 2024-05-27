@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Domain.Entities;
@@ -7,11 +7,6 @@ using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Persistance;
 using Restaurants.Infrastructure.Repositories;
 using Restaurants.Infrastructure.Seeders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Restaurants.Infrastructure.Extensions
 {
@@ -24,6 +19,7 @@ namespace Restaurants.Infrastructure.Extensions
             .EnableSensitiveDataLogging());
 
             services.AddIdentityApiEndpoints<User>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<RestaurantsDbContext>();
             services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
             services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
