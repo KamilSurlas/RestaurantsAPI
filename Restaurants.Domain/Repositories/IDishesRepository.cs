@@ -7,5 +7,6 @@ namespace Restaurants.Domain.Repositories
         Task<int> Create(Dish entity);
         Task DeleteAll(IEnumerable<Dish> entities);
         Task Delete(Dish entity);
+        Task<Dish?> GetDishByIdForRestaurant(int restaurantId, int dishId);
     }
 }

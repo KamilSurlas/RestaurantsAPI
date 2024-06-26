@@ -15,6 +15,8 @@ namespace Restaurants.Domain.Entities
         public string ContactNumber { get; set; } = default!;
         public Address Address { get; set; } = default!;
         public List<Dish> Dishes { get; set; } = [];
+        public User Owner { get; set; } = default!;
+        public string OwnerId { get; set; } = default!;
 
     }
 }

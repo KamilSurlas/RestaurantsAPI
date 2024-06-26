@@ -6,7 +6,7 @@ using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.Application.Users.Commands.Abstracts
 {
-    public abstract class UserRoleCommandHandler<TCommand> : IRequestHandler<TCommand> where TCommand : UserRoleCommand
+    public abstract class UserRoleCommandHandler<TCommand> : IRequestHandler<TCommand> where TCommand : IUserRoleCommand
     {
         protected readonly UserManager<User> _userManager;
         protected readonly RoleManager<IdentityRole> _roleManager;

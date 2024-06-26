@@ -37,8 +37,8 @@ namespace Restaurants.API.Controllers
         [Authorize(Roles = UserRoles.Owner)]
         public async Task<IActionResult> Create([FromBody] CreateRestaurantCommand command)
         {
-            int id = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id }, null);
+            int restaurantId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetById), new { restaurantId }, null);
         }
         [HttpDelete("{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

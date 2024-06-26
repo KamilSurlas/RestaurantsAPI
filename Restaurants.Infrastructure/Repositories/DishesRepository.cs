@@ -1,4 +1,5 @@
-﻿using Restaurants.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Persistance;
 
@@ -23,6 +24,12 @@ namespace Restaurants.Infrastructure.Repositories
         {
             _dbContext.RemoveRange(entities);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Dish?> GetDishByIdForRestaurant(int restaurantId, int dishId)
+        {
+            var dish = await _dbContext.Dishes.FirstOrDefaultAsync(d => d.RestaurantId == restaurantId && d.DishId == dishId);
+            return dish;
         }
     }
 }

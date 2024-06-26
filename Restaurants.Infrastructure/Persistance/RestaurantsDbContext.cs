@@ -15,11 +15,23 @@ namespace Restaurants.Infrastructure.Persistance
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Restaurant>()
                 .OwnsOne(r => r.Address);
-                
+
             modelBuilder.Entity<Restaurant>()
-                .Property(r => r.Category).HasConversion(new EnumToStringConverter<Category>());
+                .HasMany(r => r.Dishes)
+                .WithOne(d=>d.Restaurant)
+                .HasForeignKey(d => d.RestaurantId);
+
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.Category)
+                .HasConversion(new EnumToStringConverter<Category>());
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.OwnedRestaurants)
+                .WithOne(r => r.Owner)
+                .HasForeignKey(r => r.OwnerId);
         }
     }
 }
